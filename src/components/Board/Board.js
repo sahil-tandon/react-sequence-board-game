@@ -3,27 +3,41 @@ import "./Board.css";
 import Card from "../Card/Card";
 
 const Board = () => {
-  // Example state for the board, you can customize as needed
-  const [boardState, setBoardState] = useState([
-    { id: 1, value: "A" },
-    { id: 2, value: "2" },
-    { id: 3, value: "3" },
-    // Add more cards as needed
-  ]);
+  const [gameState, setGameState] = useState({
+    board: Array(10).fill(Array(10).fill(null)), // Example: 10x10 board
+    currentPlayer: 1,
+    turn: 1,
+    gameOver: false,
+    winner: null,
+  });
 
-  const handleCardClick = (cardId) => {
-    // Handle card click logic here
-    console.log(`Card clicked: ${cardId}`);
+  const handleCardClick = (row, col) => {
+    if (!gameState.gameOver && gameState.board[row][col] === null) {
+      const updatedGameState = makeMove(row, col, gameState);
+      setGameState(updatedGameState);
+
+      const gameWithWin = checkForWin(updatedGameState);
+      if (gameWithWin.gameOver) {
+        setGameState(gameWithWin);
+        // Handle game over (e.g., display winner, restart button)
+      } else {
+        setGameState(switchTurn(gameWithWin));
+      }
+    }
   };
 
   return (
     <div className="board">
-      {boardState.map((card) => (
-        <Card
-          key={card.id}
-          value={card.value}
-          onClick={() => handleCardClick(card.id)}
-        />
+      {gameState.board.map((row, rowIndex) => (
+        <div key={rowIndex} className="board-row">
+          {row.map((cell, colIndex) => (
+            <Card
+              key={colIndex}
+              value={cell}
+              onClick={() => handleCardClick(rowIndex, colIndex)}
+            />
+          ))}
+        </div>
       ))}
     </div>
   );
