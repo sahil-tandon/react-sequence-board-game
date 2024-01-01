@@ -11,10 +11,11 @@
     cursor: pointer;
     user-select: none;
     transition: background-color 0.3s ease;
+    margin: 10px 5px;
 }
 
 .card:hover {
-    background-color: #f0f0f0;
+    background-color: #999;
 }
 
 .card-value {
