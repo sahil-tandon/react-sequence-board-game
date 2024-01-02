@@ -16,53 +16,38 @@ export const makeMove = (row, col, gameState) => {
 };
 
 export const checkForWin = (gameState) => {
-  const winningPatterns = [
-    // Horizontal
-    [
-      [0, 0],
-      [0, 1],
-      [0, 2],
-      [0, 3],
-      [0, 4],
-    ],
-    // Vertical
-    [
-      [0, 0],
-      [1, 0],
-      [2, 0],
-      [3, 0],
-      [4, 0],
-    ],
-    // Diagonal
-    [
-      [0, 0],
-      [1, 1],
-      [2, 2],
-      [3, 3],
-      [4, 4],
-    ],
+  const directions = [
+    { dx: 0, dy: 1 }, // Horizontal
+    { dx: 1, dy: 0 }, // Vertical
+    { dx: 1, dy: 1 }, // Diagonal from top-left to bottom-right
+    { dx: 1, dy: -1 }, // Diagonal from top-right to bottom-left
   ];
 
-  for (const pattern of winningPatterns) {
-    const [a, b, c, d, e] = pattern;
-    const chipA = gameState.board[a[0]][a[1]];
-    const chipB = gameState.board[b[0]][b[1]];
-    const chipC = gameState.board[c[0]][c[1]];
-    const chipD = gameState.board[d[0]][d[1]];
-    const chipE = gameState.board[e[0]][e[1]];
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+      if (gameState.board[i][j] !== gameState.currentPlayer) continue;
 
-    if (
-      chipA !== null &&
-      chipA === chipB &&
-      chipA === chipC &&
-      chipA === chipD &&
-      chipA === chipE
-    ) {
-      return {
-        ...gameState,
-        gameOver: true,
-        winner: gameState.currentPlayer,
-      };
+      for (let { dx, dy } of directions) {
+        let k;
+        for (k = 0; k < 5; k++) {
+          let x = i + k * dx;
+          let y = j + k * dy;
+          if (
+            x < 0 ||
+            x >= 10 ||
+            y < 0 ||
+            y >= 10 ||
+            gameState.board[x][y] !== gameState.currentPlayer
+          )
+            break;
+        }
+        if (k === 5)
+          return {
+            ...gameState,
+            gameOver: true,
+            winner: gameState.currentPlayer,
+          };
+      }
     }
   }
 
