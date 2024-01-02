@@ -1,3 +1,10 @@
+/**
+ * Makes a move on the game board.
+ * @param {number} row - The row index of the move.
+ * @param {number} col - The column index of the move.
+ * @param {object} gameState - The current game state.
+ * @returns {object} - The updated game state after making the move.
+ */
 export const makeMove = (row, col, gameState) => {
   if (gameState.board[row][col] === null) {
     const updatedBoard = gameState.board.map((r, rowIndex) =>
@@ -15,6 +22,11 @@ export const makeMove = (row, col, gameState) => {
   return gameState;
 };
 
+/**
+ * Checks if the current player has won the game.
+ * @param {object} gameState - The current game state.
+ * @returns {object} - The updated game state if the current player has won, otherwise the original game state.
+ */
 export const checkForWin = (gameState) => {
   const directions = [
     { dx: 0, dy: 1 }, // Horizontal
@@ -54,6 +66,11 @@ export const checkForWin = (gameState) => {
   return gameState;
 };
 
+/**
+ * Switches the turn to the next player.
+ * @param {object} gameState - The current game state.
+ * @returns {object} - The updated game state with the next player's turn.
+ */
 export const switchTurn = (gameState) => {
   return {
     ...gameState,
