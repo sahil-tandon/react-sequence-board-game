@@ -1,3 +1,10 @@
+/**
+ * The entry point of the React application.
+ * Renders the <App /> component inside the root element.
+ * Also includes a function call to measure performance using reportWebVitals.
+ *
+ * @module index
+ */
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";

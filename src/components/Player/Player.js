@@ -1,3 +1,10 @@
+/**
+ * Player component represents a player in the game.
+ *
+ * @param {Object} props - The props object containing the playerName.
+ * @param {string} props.playerName - The name of the player.
+ * @returns {JSX.Element} The rendered Player component.
+ */
 import React from "react";
 import "./Player.css";
 

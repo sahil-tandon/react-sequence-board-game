@@ -1,3 +1,7 @@
+/**
+ * The main component of the Sequence board game application.
+ * Renders the game board, player information, and other components.
+ */
 import React from "react";
 import "./App.css";
 import Board from "../Board/Board";
@@ -14,6 +18,11 @@ const App = () => {
     winner: null,
   });
 
+  /**
+   * Handles the click event on a card.
+   * @param {number} row - The row index of the clicked card.
+   * @param {number} col - The column index of the clicked card.
+   */
   const handleCardClick = (row, col) => {
     if (!gameState.gameOver && gameState.board[row][col] === null) {
       const updatedGameState = makeMove(row, col, gameState);
